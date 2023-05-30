@@ -103,9 +103,6 @@ route.get('/', async (req, res) => {
     }
 });
 
-route.get('/:id', (req, res) => {
-    res.send("get Single institute Data")
-});
 
 route.post('/', async (req, res) => {
     let { name, shortName, address, tel } = req.body;
@@ -142,11 +139,61 @@ route.post('/', async (req, res) => {
     }
 })
 
-route.put("/:id", (req, res) => {
-    res.send("Edit institute Data");
+route.get("/:id", async (req, res) => {
+    try {
+        let id = req.params.id;
+        const result = await instituteModel.findById(id);
+        if (!result) {
+            res.send(sendResponse(false, null, "No Data Found")).status(404);
+        } else {
+            res.send(sendResponse(true, result)).status(200);
+        }
+    } catch (e) {
+        console.log(e);
+        res.send(sendResponse(false, null, "Internal Server Error")).status(400);
+    }
 });
-route.delete("/:id", (req, res) => {
-    res.send("Delete institute");
+
+route.put("/:id", async (req, res) => {
+    try {
+        let id = req.params.id;
+        let result = await instituteModel.findById(id);
+        if (!result) {
+            res.send(sendResponse(false, null, "No Data Found")).status(400);
+        } else {
+            let updateResult = await instituteModel.findByIdAndUpdate(id, req.body, {
+                new: true,
+            });
+            if (!updateResult) {
+                res.send(sendResponse(false, null, "Error")).status(404);
+            } else {
+                res
+                    .send(sendResponse(true, updateResult, "Updated Successfully"))
+                    .status(200);
+            }
+        }
+    } catch (e) {
+        res.send(sendResponse(false, null, "Error")).status(400);
+    }
+});
+
+route.delete("/:id", async (req, res) => {
+    try {
+        let id = req.params.id;
+        let result = await instituteModel.findById(id);
+        if (!result) {
+            res.send(sendResponse(false, null, "No Data on this ID")).status(404);
+        } else {
+            let delResult = await instituteModel.findByIdAndDelete(id);
+            if (!delResult) {
+                res.send(sendResponse(false, null, "Error")).status(404);
+            } else {
+                res.send(sendResponse(true, null, "Deleted Successfully")).status(200);
+            }
+        }
+    } catch (e) {
+        res.send(sendResponse(false, null, "No Data on this ID")).status(404);
+    }
 });
 
 module.exports = route; 
