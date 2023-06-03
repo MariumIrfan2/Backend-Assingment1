@@ -17,10 +17,7 @@ route.get('/', async (req, res) => {
         if (!result) {
             res.send(sendResponse(false, null, "no data found"))
         } else {
-            res.send(sendResponse(true, {
-                result,
-                totalPages: totalCount / itemsPerPage
-            })).status(200)
+            res.send(sendResponse(true, result)).status(200)
         }
 
     } catch (e) {
