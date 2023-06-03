@@ -20,38 +20,8 @@ route.get('/', async (req, res) => {
     }
 });
 
-// route.get('/search', async (res, req) => {
-//     let { firstName, lastName } = req.body;
-//     if (firstName) {
-//         let result = await studentModel.find({
-//             firstName: firstName,
-//             lastName: lastName
-//         });
-//         if (!result) {
-//             res.send(sendResponse(false, null, 'no data found')).status(404)
-//         } else {
-//             res.send(sendResponse(true, result)).status(200)
-//         }
-//     }
-// })
-
-// route.get('/:id', async (req, res) => {
-//     let id = req.params.id;
-//     try {
-//         const result = await studentModel.findById(id);
-//         if (!result) {
-//             res.send(sendResponse(false, null, "no data Found")).status(404);
-//         } else {
-//             res.send(sendResponse(true, result)).status(200)
-//         }
-
-//     } catch (e) {
-//         console.log(e);
-//         res.send(sendResponse(false, null, "Internal Server Error")).status(400);
-//     }
-// });
-
 route.get("/search", async (req, res) => {
+    
     let { firstName, lastName } = req.body;
     if (firstName) {
         let result = await studentModel.find({
