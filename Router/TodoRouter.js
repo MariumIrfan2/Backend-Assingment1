@@ -5,15 +5,16 @@ const { sendResponse } = require('../Helper/Helper');
 const route = express.Router();
 
 route.get('/', async (req, res) => {
-    const page = req.query.p || 0;
+    const pageNo = req.query.p || 1;
     const itemsPerPage = 2;
 
     try {
         const result = await TodoModel.find()
-            .skip(page * itemsPerPage)
+            .skip((pageNo - 1) * itemsPerPage)
             .limit(itemsPerPage);
 
         const totalCount = await TodoModel.countDocuments();
+        // req.headers.recordCount = totalCount 
         if (!result) {
             res.send(sendResponse(false, null, "no data found"))
         } else {

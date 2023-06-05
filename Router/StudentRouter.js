@@ -21,7 +21,7 @@ route.get('/', async (req, res) => {
 });
 
 route.get("/search", async (req, res) => {
-    
+
     let { firstName, lastName } = req.body;
     if (firstName) {
         let result = await studentModel.find({
