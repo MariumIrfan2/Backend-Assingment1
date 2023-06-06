@@ -65,6 +65,7 @@ const CourseRouter = require("./Router/CourseRouter")
 const InstituteRouter = require("./Router/InstituteRouter")
 const TeacherRouter = require("./Router/TeacherRouter")
 const TodoRouter = require("./Router/TodoRouter")
+const UserRouter = require("./Router/UserRouter")
 
 
 const app = express()
@@ -76,6 +77,7 @@ app.use("/api/todos", TodoRouter)
 app.use("/api/courses", CourseRouter)
 app.use("/api/institutes", InstituteRouter)
 app.use("/api/teachers", TeacherRouter)
+app.use("/api/users", UserRouter)
 
 
 mongoose.connect(process.env.MONGO_URI)
@@ -87,6 +89,3 @@ mongoose.connect(process.env.MONGO_URI)
     .catch((err) => {
         console.log(err)
     })
-
-
-
