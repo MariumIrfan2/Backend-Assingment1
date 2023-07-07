@@ -68,7 +68,7 @@ const AuthController = {
             token = token.split("")[1];
             jwt.verify(token, process.env.SECURE_KEY, (err, decoded) => {
                 if (err) {
-                    res.send(sendResponse(false, null, "Unathorizedbb")).status(403);
+                    res.send(sendResponse(false, null, "Unathorized(token Verification)")).status(403);
 
                 } else {
                     console.log(decoded)
